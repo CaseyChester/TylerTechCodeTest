@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="PrsnlMgmt.Mvvm.Shared.ErrorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PrsnlMgmt.Mvvm.Shared"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500" FontSize="12">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="ERROR ! ! !" 
+                   FontSize="24" 
+                   Foreground="DarkRed"
+                   HorizontalAlignment="Center" />
+        <StackPanel Grid.Row="1" >
+            <Label Content="Error Summary:" FontWeight="Bold" />
+            <Border BorderThickness="1" BorderBrush="Black">
+                <TextBlock Text="{Binding Summary}" 
+                           TextWrapping="WrapWithOverflow" 
+                           FontFamily="Consolas"/>
+            </Border>
+        </StackPanel>
+        <Button Grid.Row="3" 
+                IsCancel="True"
+                Margin="20, 10"
+                Padding="20, 5"
+                Content="Continue" 
+                Command="{Binding ContinueCommand}"
+                HorizontalAlignment="Center" />
+    </Grid>
+</UserControl>

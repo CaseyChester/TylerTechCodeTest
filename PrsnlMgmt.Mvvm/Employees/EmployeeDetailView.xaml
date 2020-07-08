@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="PrsnlMgmt.Mvvm.Employees.EmployeeDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:PrsnlMgmt.Mvvm.Employees"
+             xmlns:Data="clr-namespace:PrsnlMgmt.Data;assembly=PrsnlMgmt.Data" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" 
+             d:DesignWidth="300" 
+             MinHeight="300" 
+             MinWidth="300" 
+             MaxWidth="300" 
+             FontSize="12">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="OnLoad" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                                    Path=(Validation.Errors)/ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="Add New Employee" 
+                   FontSize="24" 
+                   Foreground="DarkGray" 
+                   HorizontalAlignment="Center" />
+        <Grid x:Name="gridDataEntry" 
+              Grid.Row="1" 
+              Margin="20,20,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Content="Manager:" Grid.Row="0" Grid.Column="0" 
+                   Margin="3" 
+                   HorizontalAlignment="Right" />
+            <ComboBox Grid.Column="1" 
+                      Grid.Row="0" 
+                      Margin="3" 
+                      ItemsSource="{Binding Managers}"
+                      SelectedItem="{Binding SelectedManager, ValidatesOnNotifyDataErrors=True}"
+                      DisplayMemberPath="DisplayMember" />
+            
+            <Label Content="Employee Id:" Grid.Row="1" Grid.Column="0" 
+                   Margin="3" 
+                   HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                     Margin="3" 
+                     Text="{Binding EmployeeId, ValidatesOnNotifyDataErrors=True}" />
+            
+            <Label Content="First Name:" Grid.Row="2" Grid.Column="0" 
+                   Margin="3" 
+                   HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                     Margin="3" 
+                     Text="{Binding FirstName, ValidatesOnNotifyDataErrors=True}" />
+            
+            <Label Content="Last Name:" Grid.Row="3" Grid.Column="0" 
+                   Margin="3" 
+                   HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="3" 
+                     Text="{Binding LastName, ValidatesOnNotifyDataErrors=True}" />
+            
+            <Label Content="Roles:" Grid.Row="4" Grid.Column="0" 
+                   Margin="3" 
+                   HorizontalAlignment="Right" />
+            <ListBox Grid.Column="1" 
+                     Grid.Row="4" 
+                     Margin="3"
+                     SelectionMode="Multiple"
+                     ItemsSource="{Binding Roles}"
+                     VerticalAlignment="Top"
+                     MinHeight="30">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Item}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </Grid>
+        <Grid x:Name="gridActionButtons" 
+              Grid.Row="2" MaxWidth="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Save"
+                    IsDefault="True"
+                    Margin="10,20"
+                    Padding="20,5"
+                    Command="{Binding SaveCommand}" />
+            <Button Grid.Column="1" Content="Cancel"
+                    IsCancel="True"
+                    Margin="10,20"
+                    Padding="20,5"
+                    Command="{Binding CancelCommand}" />
+        </Grid>
+    </Grid>
+</UserControl>
